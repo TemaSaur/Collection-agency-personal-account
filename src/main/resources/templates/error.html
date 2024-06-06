@@ -9,21 +9,11 @@
 <header>
     <div class="container flex between">
         <a href="/"><span class="fancy big">Маяк Коллект</span></a>
-        <div class="user flex gap-2 align">
-            <span class="total">42 358 ₽</span>
-            <span class="name"><a href="change">Иванов И.И.</a></span>
-            <a href="/login">Выйти</a>
-        </div>
     </div>
 </header>
-<main>
-<div th:if="${message}">
-    <div th:text="${message}"></div>
-</div>
-<form th:action="@{/become-admin}" method="post">
-    <div><label> Enter code : <input type="text" name="code"/> </label></div>
-    <div><input type="submit" value="Стать администратором"/></div>
-</form>
+<main class="container pad">
+    <h1>Ошибка</h1>
+    <p>Что-то пошло не так</p>
 </main>
 <footer>
     <div class="container">

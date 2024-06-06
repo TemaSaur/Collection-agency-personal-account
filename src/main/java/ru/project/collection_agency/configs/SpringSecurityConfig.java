@@ -16,13 +16,13 @@ public class SpringSecurityConfig
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/registration", "/login", "/logout", "/email-verification").permitAll()
-                        .requestMatchers("/delete/**", "/users/all","contracts/all", "debts/all","/users/{user_id}", "debts/add", "/debts/{debt_id}/repaid").hasRole("ADMIN")
-                        .requestMatchers("/home", "/edit-info", "/become-admin","debts/{debt_id}, contracts/{contract_id}", "home/contracts", "home/debts").hasRole("USER")
-                        .requestMatchers("/create/**").hasAuthority("CREATOR")
-                        .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+            .authorizeHttpRequests((authz) -> authz
+                    .requestMatchers("/registration", "/login", "/logout", "/email-verification", "/", "css/**").permitAll()
+                    .requestMatchers("/delete/**", "/users/all","contracts/all", "debts/all","/users/{user_id}", "debts/add", "/debts/{debt_id}/repaid").hasRole("ADMIN")
+                    .requestMatchers("/home", "/edit-info", "/become-admin","/debts/{debt_id}", "contracts/{contract_id}", "home/contracts", "home/debts").hasRole("USER")
+                    .requestMatchers("/create/**").hasAuthority("CREATOR")
+                    .anyRequest().authenticated())
+            .formLogin(Customizer.withDefaults());
         return http.build();
     }
 
@@ -31,5 +31,4 @@ public class SpringSecurityConfig
     {
         return NoOpPasswordEncoder.getInstance();
     }
-
 }

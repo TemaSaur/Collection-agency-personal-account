@@ -1,15 +1,44 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\<head>
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
     <title>Spring Security Example </title>
+    <link rel="stylesheet" th:href="@{css/style.css}">
 </head>
 <body>
-<div th:if="${message}">
-    <div th:text="${message}"></div>
-</div>
-<form th:action="@{/email-verification}" method="post">
-    <div><label> Verification code : <input type="text" name="code"/> </label></div>
-    <div><input type="submit" value="Подтвердить почту и зарегистрироваться"/></div>
-</form>
+    <header>
+        <div class="container flex between">
+            <a href="/"><span class="fancy big">Маяк Коллект</span></a>
+        </div>
+    </header>
+    <main class="container pad">
+        <div th:if="${message}">
+            <div th:text="${message}"></div>
+        </div>
+        <form th:action="@{/email-verification}" method="post">
+            <div><label> Verification code : <input type="text" name="code"/> </label></div>
+            <div><input type="submit" value="Подтвердить почту и зарегистрироваться"/></div>
+        </form>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="fancy spaceout">Маяк Коллект</div>
+            <div class="flex between">
+                <div class="links">
+                    <p><a href="http://mayak-kollekt.ru/#about">О компании</a></p>
+                    <p><a href="http://mayak-kollekt.ru/#services">Услуги</a></p>
+                    <p><a href="http://mayak-kollekt.ru/#contact">Контакты</a></p>
+                    <p><a href="http://mayak-kollekt.ru/payment">Как оплатить?</a></p>
+                </div>
+                <div class="copyright">
+                    &copy; 2024 "МАЯК КОЛЛЕКТ"
+                </div>
+                <div class="contact">
+                    📞 +7 800 555 35 35
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

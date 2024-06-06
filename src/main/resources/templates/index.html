@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Маяк Коллект - личный кабинет</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.4/p5.min.js" integrity="sha512-d6sc8kbZEtA2LwB9m/ck0FhvyUwVfdmvTeyJRprmj7Wg9wRFtHDIpr6qk4g/y3Ix3O9I6KHIv6SGu9f7RaP1Gw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div class="container flex between">
+        <a href="/"><span class="fancy big">Маяк Коллект</span></a>
+        <div class="user flex gap-2 align">
+            <span th:if="${name != null}">
+                <span class="total" th:text="${totalSum}"></span>
+            </span>
+            <span class="name"><a href="/edit-info" th:if="${name != null}">
+                <span th:text="${name}" /></a>
+            </span>
+            <a href="/logout">Выйти</a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="container pad">
+        <h1>Ваша задолженность</h1>
+        <div th:if="${name != null}">
+            <div class="layout">
+                <div class="data">
+                    <h3>Задолженности:</h3>
+                    <div class="tables">
+                        <div class="table" th:each="debt: ${debts}">
+                            <p class="key">Сумма задолженности:</p>
+                            <p class="value"><span th:text="${debt.getAmount()}"></span> ₽</p>
+
+                            <p class="key">Первоначальный кредитор:</p>
+                            <p class="value"><span th:text="${debt.getCreditor()}"></span></p>
+
+                            <div th:if="${debt.isRepaid()}" class="key">Оплачен</div>
+                            <div th:unless="${debt.isRepaid()}">
+                                <a th:href="@{'/debts/' + ${debt.getId()} + '/repaid'}">Оплатить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chart-parent gap-2 flex align">
+                    <div class="chart" id="chart">
+                    </div>
+                    <div class="markers">
+                        <div class="marker">
+                            <span class="mark color1"></span>
+                            <div class="text">Остаток долга: <span class="number" th:text="${left}"></span> ₽</div>
+                        </div>
+                        <div class="marker">
+                            <span class="mark color2"></span>
+                            <div class="text">Оплачено: <span class="number" th:text="${paid}"></span> ₽</div>
+                        </div>
+                        <div class="marker">
+                            <span class="mark color3"></span>
+                            <div class="text">Прощено: <span class="number" th:text="${sorry}"></span> ₽</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${name == null}">
+            <a href="/edit-info">Изменить данные пользователя</a>
+        </div>
+    </div>
+</main>
+<footer>
+    <div class="container">
+        <div class="fancy spaceout">Маяк Коллект</div>
+        <div class="flex between">
+            <div class="links">
+                <p><a href="http://mayak-kollekt.ru/#about">О компании</a></p>
+                <p><a href="http://mayak-kollekt.ru/#services">Услуги</a></p>
+                <p><a href="http://mayak-kollekt.ru/#contact">Контакты</a></p>
+                <p><a href="http://mayak-kollekt.ru/payment">Как оплатить?</a></p>
+            </div>
+            <div class="copyright">
+                &copy; 2024 "МАЯК КОЛЛЕКТ"
+            </div>
+            <div class="contact">
+                📞 +7 800 555 35 35
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    function setup() {
+        const data = [...document.querySelectorAll('.marker .number')].map(e => +(e.textContent.replace('{', '').replace('}', '')))
+
+        const colors = [
+            '#3053BC',
+            '#172859',
+            '#B0C0F1',
+        ]
+        const sum = data[0] + data[1] + data[2];
+
+        const size = 278, strokeWidth = 3
+        const canvas = createCanvas(size, size)
+        canvas.parent('chart')
+
+        strokeWeight(strokeWidth)
+        stroke(255)
+
+        let angle = -HALF_PI
+        for (let i = 0; i < 3; ++i) {
+            fill(colors[i])
+
+            const endAngle = angle + (PI * 2) * data[i] / sum;
+            arc(size / 2, size / 2, size - strokeWidth, size - strokeWidth, angle, endAngle, PIE)
+            angle = endAngle
+        }
+    }
+</script>
+</body>
+</html>

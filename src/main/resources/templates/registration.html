@@ -1,17 +1,58 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">\<head>
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
     <title>Spring Security Example </title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-<div th:if="${message}">
-    <div th:text="${message}"></div>
-</div>
-<form th:action="@{/registration}" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><label> Email: <input type="text" name="email"/> </label></div>
-    <div><input type="submit" value="Отправить код подтверждения на почту"/></div>
-</form>
+    <header>
+        <div class="container flex between">
+            <a href="/"><span class="fancy big">Маяк Коллект</span></a>
+        </div>
+    </header>
+    <main class="container pad">
+        <h1>Регистрация</h1>
+        <div th:if="${message}">
+            <div th:text="${message}"></div>
+        </div>
+        <div class="form-parent">
+            <form th:action="@{/registration}" method="post">
+                <div>
+                    <p><label for="username">Имя пользователя:</label></p>
+                    <input type="text" name="username" id="username"/>
+                </div>
+                <div>
+                    <p><label for="password">Пароль:</label></p>
+                    <input type="password" name="password" id="password"/>
+                </div>
+                <div>
+                    <p><label for="email">E-mail:</label></p>
+                    <input type="text" name="email" id="email"/>
+                </div>
+                <div><input type="submit" value="Регистрация"/></div>
+            </form>
+            <a href="/login">Уже есть профиль?</a>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="fancy spaceout">Маяк Коллект</div>
+            <div class="flex between">
+                <div class="links">
+                    <p><a href="http://mayak-kollekt.ru/#about">О компании</a></p>
+                    <p><a href="http://mayak-kollekt.ru/#services">Услуги</a></p>
+                    <p><a href="http://mayak-kollekt.ru/#contact">Контакты</a></p>
+                    <p><a href="http://mayak-kollekt.ru/payment">Как оплатить?</a></p>
+                </div>
+                <div class="copyright">
+                    &copy; 2024 "МАЯК КОЛЛЕКТ"
+                </div>
+                <div class="contact">
+                    📞 +7 800 555 35 35
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
